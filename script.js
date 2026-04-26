@@ -193,6 +193,6 @@ const createScrollToTopButton = () => {
 createScrollToTopButton();
 
 // Console message
-console.log('%c👋 Welcome to AMPFARISAHO Murida\'s Portfolio', 'font-size: 20px; color: #3498db; font-weight: bold;');
+console.log('%c👋 Welcome to MURIDA AMPFARISAHO\'s Portfolio', 'font-size: 20px; color: #3498db; font-weight: bold;');
 console.log('%cIT Systems Development | Data Analyst | Technical Professional', 'font-size: 14px; color: #2c3e50;');
 console.log('%cEmail: muridafoster@gmail.com | Phone: 060 894 4194', 'font-size: 12px; color: #7f8c8d;');

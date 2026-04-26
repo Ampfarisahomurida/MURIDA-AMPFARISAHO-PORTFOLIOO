@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = 8080;
-const HOST = 'localhost';
+const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // MIME types
 const mimeTypes = {
@@ -77,7 +77,7 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, HOST, () => {
     console.log(`\n⭐ Portfolio Server Running ⭐`);
     console.log(`\n📍 URL: http://${HOST}:${PORT}`);
-    console.log(`\n🎯 AMPFARISAHO Murida's Professional Portfolio`);
+    console.log(`\n🎯 MURIDA AMPFARISAHO's Professional Portfolio`);
     console.log(`📧 Email: muridafoster@gmail.com`);
     console.log(`📱 Phone: 060 894 4194\n`);
     console.log(`Press Ctrl+C to stop the server\n`);
