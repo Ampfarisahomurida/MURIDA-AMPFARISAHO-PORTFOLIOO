@@ -1,0 +1,21 @@
+{
+  "name": "ampfarisaho-portfolio",
+  "version": "1.0.0",
+  "description": "Professional Portfolio of AMPFARISAHO Murida - IT Systems Development & Data Analyst",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "IT",
+    "data-analyst",
+    "systems-development"
+  ],
+  "author": "AMPFARISAHO Murida",
+  "email": "muridafoster@gmail.com",
+  "phone": "060 894 4194",
+  "license": "MIT",
+  "dependencies": {}
+}
