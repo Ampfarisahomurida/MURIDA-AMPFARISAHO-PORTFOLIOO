@@ -95,11 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Toggle mobile menu
         hamburger.addEventListener('click', function(e) {
             e.stopPropagation();
-            navLinks.classList.toggle('active');
-            hamburger.innerHTML = navLinks.classList.contains('active') ? '✕' : '☰';
+            const isOpen = navLinks.classList.toggle('active');
+            hamburger.innerHTML = isOpen ? '✕' : '☰';
+            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
             // Prevent body scroll when menu is open
-            if (navLinks.classList.contains('active')) {
+            if (isOpen) {
                 body.style.overflow = 'hidden';
             } else {
                 body.style.overflow = '';
@@ -111,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 hamburger.innerHTML = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
                 body.style.overflow = '';
             });
         });
