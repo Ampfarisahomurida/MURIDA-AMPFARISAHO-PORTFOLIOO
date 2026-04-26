@@ -33,36 +33,6 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Contact form handling
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const data = {
-        name: this.querySelector('input[type="text"]').value,
-        email: this.querySelector('input[type="email"]').value,
-        message: this.querySelector('textarea').value
-    };
-
-    // Validate form
-    if (!data.name || !data.email || !data.message) {
-        alert('Please fill in all fields');
-        return;
-    }
-
-    // Email validation
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(data.email)) {
-        alert('Please enter a valid email address');
-        return;
-    }
-
-    // Show success message
-    alert(`Thank you ${data.name}! Your message has been received. I'll get back to you soon.`);
-    
-    // Reset form
-    this.reset();
-});
 
 // Add animation on scroll
 const observerOptions = {
@@ -193,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     images.forEach(img => imageObserver.observe(img));
 
-    // Enhanced form validation
+    // Enhanced form validation and WhatsApp delivery
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -227,11 +197,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 message.style.borderColor = '';
             }
 
-            if (isValid) {
-                // Here you would typically send the form data to a server
-                alert('Thank you for your message! I will get back to you soon.');
-                this.reset();
+            if (!isValid) {
+                alert('Please complete all fields correctly before sending.');
+                return;
             }
+
+            const whatsappNumber = '260608944194';
+            const whatsappMessage = `New message from ${name.value.trim()} (${email.value.trim()}): ${message.value.trim()}`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+            window.open(whatsappUrl, '_blank');
+
+            alert('Your message is being prepared in WhatsApp. Please send it there to complete delivery.');
+            this.reset();
         });
     }
 
