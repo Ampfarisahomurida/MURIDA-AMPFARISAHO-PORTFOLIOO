@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const whatsappNumber = '260608944194';
+            const whatsappNumber = '27608944194';
             const whatsappMessage = `New message from ${name.value.trim()} (${email.value.trim()}): ${message.value.trim()}`;
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
