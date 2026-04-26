@@ -2,6 +2,7 @@
   "name": "ampfarisaho-portfolio",
   "version": "1.0.0",
   "description": "Professional Portfolio of AMPFARISAHO Murida - IT Systems Development & Data Analyst",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

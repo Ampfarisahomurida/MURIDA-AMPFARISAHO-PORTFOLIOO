@@ -85,24 +85,159 @@ document.querySelectorAll('.skill-card, .portfolio-item, .education-card').forEa
     observer.observe(el);
 });
 
-// Mobile menu toggle (if needed)
-let hamburger = null;
-if (window.innerWidth < 768) {
-    const navbar = document.querySelector('.navbar');
-    const navContainer = navbar.querySelector('.container');
-    
-    hamburger = document.createElement('div');
-    hamburger.className = 'hamburger';
-    hamburger.innerHTML = '☰';
-    hamburger.style.cssText = `
-        display: none;
-        cursor: pointer;
-        font-size: 1.5rem;
-        color: white;
-    `;
-    
-    navContainer.appendChild(hamburger);
-}
+// Enhanced Mobile Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+
+    if (hamburger && navLinks) {
+        // Toggle mobile menu
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') ? '✕' : '☰';
+
+            // Prevent body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '☰';
+                body.style.overflow = '';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '☰';
+                body.style.overflow = '';
+            }
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '☰';
+                body.style.overflow = '';
+            }
+        });
+    }
+
+    // Enhanced smooth scrolling for all devices
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const headerOffset = 80;
+                const elementPosition = target.offsetTop;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Touch-friendly interactions
+    if ('ontouchstart' in window) {
+        // Add touch feedback for buttons
+        document.querySelectorAll('button, .cta-button, .submit-btn').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+
+            btn.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    }
+
+    // Viewport height fix for mobile browsers
+    function setVH() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    setVH();
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+
+    // Performance optimization: Lazy load images
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+
+    // Enhanced form validation
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = this.querySelector('input[name="name"]');
+            const email = this.querySelector('input[name="email"]');
+            const message = this.querySelector('textarea[name="message"]');
+
+            let isValid = true;
+
+            // Simple validation
+            if (!name.value.trim()) {
+                name.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                name.style.borderColor = '';
+            }
+
+            if (!email.value.trim() || !email.value.includes('@')) {
+                email.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                email.style.borderColor = '';
+            }
+
+            if (!message.value.trim()) {
+                message.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                message.style.borderColor = '';
+            }
+
+            if (isValid) {
+                // Here you would typically send the form data to a server
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            }
+        });
+    }
+
+    // Add loading animation for better UX
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+    });
+});
 
 // Add active state for nav links
 const addActiveStateStyles = () => {
