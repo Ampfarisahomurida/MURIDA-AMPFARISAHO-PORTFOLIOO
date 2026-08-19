@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: murida-portfolio
+    env: docker
+    plan: free
+    branch: main
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: ADMIN_PASSWORD
+        value: Mizzirash2
+    # If you want SQLite persistence, add a Persistent Disk in the Render dashboard
+    # and mount it to /usr/src/app/MURIDA-AMPFARISAHO-PORTFOLIOO-main/data
+    disk: 1
