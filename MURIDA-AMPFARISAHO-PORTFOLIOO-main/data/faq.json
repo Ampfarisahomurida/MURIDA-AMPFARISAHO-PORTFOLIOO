@@ -1,0 +1,26 @@
+[
+  {
+    "triggers": ["experience", "freelancer", "years"],
+    "answer": "Murida has been freelancing for the past 3 years, delivering frontend projects, data analysis, and reporting for clients and small businesses."
+  },
+  {
+    "triggers": ["couple collection", "couple-collection", "shopping", "project"],
+    "answer": "Couple Collection is a personal shopping website project currently in progress. You can view it here: https://couple-collection-1.onrender.com/index.html"
+  },
+  {
+    "triggers": ["skills", "technologies", "tech", "tools"],
+    "answer": "Key skills include HTML, CSS, JavaScript, React, Node.js, Excel, and SQL."
+  },
+  {
+    "triggers": ["contact", "email", "phone", "whatsapp"],
+    "answer": "Contact Murida at muridafoster@gmail.com or call/WhatsApp +27 60 894 4194."
+  },
+  {
+    "triggers": ["portfolio", "work", "projects"],
+    "answer": "This portfolio highlights projects, CV, technical skills, and data analysis reports. Check the Portfolio section for details or contact Murida to request specific examples."
+  },
+  {
+    "triggers": ["education", "diploma", "college", "certificat"],
+    "answer": "Murida holds a Diploma in IT Systems Development from Boston City Campus and a Grade 12 certificate from Gole Secondary School."
+  }
+]

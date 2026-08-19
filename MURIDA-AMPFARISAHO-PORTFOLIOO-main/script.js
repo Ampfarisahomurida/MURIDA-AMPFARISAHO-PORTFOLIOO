@@ -311,3 +311,165 @@ createScrollToTopButton();
 console.log('%c👋 Welcome to MURIDA AMPFARISAHO\'s Portfolio', 'font-size: 20px; color: #3498db; font-weight: bold;');
 console.log('%cIT Systems Development | Data Analyst | Technical Professional', 'font-size: 14px; color: #2c3e50;');
 console.log('%cEmail: muridafoster@gmail.com | Phone: 060 894 4194', 'font-size: 12px; color: #7f8c8d;');
+
+// Simple chat widget for visitor questions about Murida
+(function initChatWidget() {
+    const chatButton = document.createElement('button');
+    chatButton.className = 'chat-toggle';
+    chatButton.title = 'Ask about Murida';
+    chatButton.innerHTML = '💬';
+    document.body.appendChild(chatButton);
+
+    const chatBox = document.createElement('div');
+    chatBox.className = 'chat-box';
+    chatBox.innerHTML = `
+        <div class="chat-header">Ask about Murida <div style="display:flex;gap:8px;align-items:center;"><button class="chat-clear-memory" title="Clear conversation">Clear</button><span class="chat-close">✕</span></div></div>
+        <div class="chat-messages" aria-live="polite"></div>
+        <form class="chat-form">
+            <input type="text" name="message" placeholder="Ask me anything about Murida..." autocomplete="off" required />
+            <button type="submit">Send</button>
+        </form>
+    `;
+    document.body.appendChild(chatBox);
+
+    const toggle = () => chatBox.classList.toggle('open');
+
+    chatButton.addEventListener('click', toggle);
+    chatBox.querySelector('.chat-close').addEventListener('click', toggle);
+
+    const messagesEl = chatBox.querySelector('.chat-messages');
+    const form = chatBox.querySelector('.chat-form');
+
+    // Session id persisted in localStorage so memory survives page reloads
+    function getSessionId() {
+        let sid = localStorage.getItem('chat_sid');
+        if (!sid) {
+            if (window.crypto && crypto.randomUUID) sid = crypto.randomUUID();
+            else sid = `sid_${Date.now()}_${Math.floor(Math.random()*1e6)}`;
+            localStorage.setItem('chat_sid', sid);
+        }
+        return sid;
+    }
+
+    const sessionId = getSessionId();
+
+    // Clear memory button
+    const clearBtn = chatBox.querySelector('.chat-clear-memory');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'clear', sessionId })
+                });
+                const json = await res.json();
+                if (json && json.success) {
+                    messagesEl.innerHTML = '';
+                    appendMessage('Memory cleared. I will forget previous conversation.', 'bot');
+                    // reset stored session id for a fresh session
+                    localStorage.removeItem('chat_sid');
+                    // generate new session id for future messages
+                    getSessionId();
+                } else {
+                    appendMessage('Unable to clear memory.', 'bot');
+                }
+            } catch (err) {
+                appendMessage('Error clearing memory.', 'bot');
+            }
+        });
+    }
+
+    function appendMessage(text, from = 'bot') {
+        const msgWrap = document.createElement('div');
+        msgWrap.className = `chat-msg-wrap ${from}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = `chat-avatar ${from}`;
+        avatar.textContent = from === 'user' ? '👤' : '🤖';
+
+        const bubble = document.createElement('div');
+        bubble.className = `chat-msg ${from}`;
+        bubble.textContent = text;
+
+        const meta = document.createElement('div');
+        meta.className = 'chat-meta';
+        const time = new Date();
+        meta.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        bubble.appendChild(meta);
+        if (from === 'user') {
+            msgWrap.appendChild(bubble);
+            msgWrap.appendChild(avatar);
+        } else {
+            msgWrap.appendChild(avatar);
+            msgWrap.appendChild(bubble);
+        }
+
+        messagesEl.appendChild(msgWrap);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function showTyping(on = true) {
+        // Ensure only one typing indicator
+        let indicator = messagesEl.querySelector('.typing-indicator');
+        if (on) {
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.className = 'chat-msg-wrap bot typing-indicator';
+                indicator.innerHTML = `<div class="chat-avatar bot">🤖</div><div class="chat-msg bot"><span class="dots">●●●</span><div class="chat-meta">...</div></div>`;
+                messagesEl.appendChild(indicator);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            }
+        } else {
+            if (indicator) indicator.remove();
+        }
+    }
+
+    // Greet
+    appendMessage('Hi — I can answer questions about Murida. Ask me anything!', 'bot');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const input = form.querySelector('input[name="message"]');
+        const text = input.value.trim();
+        if (!text) return;
+        appendMessage(text, 'user');
+        input.value = '';
+
+        showTyping(true);
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, sessionId })
+            });
+            if (!res.ok) {
+                // try to extract message body
+                let bodyText = '';
+                try { bodyText = await res.text(); } catch (e) { bodyText = res.statusText; }
+                showTyping(false);
+                appendMessage(`Chat service error: ${res.status} ${bodyText}`, 'bot');
+                console.error('Chat service error', res.status, bodyText);
+                return;
+            }
+            const json = await res.json();
+            showTyping(false);
+            if (json && json.success && json.reply) {
+                appendMessage(json.reply, 'bot');
+                // if server returned a new sessionId, persist it
+                if (json.sessionId) localStorage.setItem('chat_sid', json.sessionId);
+            } else if (json && !json.success && json.error) {
+                appendMessage(`Chat service error: ${json.error}`, 'bot');
+                console.error('Chat service returned error:', json.error);
+            } else {
+                appendMessage('Sorry, I could not get an answer right now.', 'bot');
+            }
+        } catch (err) {
+            showTyping(false);
+            appendMessage(`Error contacting the chat service: ${err && err.message}`, 'bot');
+            console.error('Fetch error contacting /api/chat', err);
+        }
+    });
+})();
