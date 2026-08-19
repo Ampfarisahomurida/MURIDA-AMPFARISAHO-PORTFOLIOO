@@ -27,28 +27,20 @@ npm start
 ```
 
 Environment variables
-- `ADMIN_PASSWORD` default: `Mizzirash2`
-- `OPENAI_API_KEY` (optional) — to use OpenAI provider
-- `HF_API_KEY` and `HF_MODEL` (optional) — to use Hugging Face
-- `AI_PROVIDER` set to `openai` or `hf` to force provider
+- None required for the static site. `PORT` may be provided by hosting platforms.
 
 Troubleshooting
-- If `npm install` fails building native modules, use Docker or ensure build tools are installed (gcc, g++, make, python3, libsqlite3-dev).
-- Check server logs for runtime errors. If chat fails, open browser DevTools → Network → inspect `/api/chat` response and paste logs.
-- Render deployment (recommended for simple hosting)
+- If you see server errors, check the server logs. Use Docker locally to reproduce: `docker-compose up --build`.
+
+Render deployment (recommended for simple hosting)
 
 1. Ensure you have committed `Dockerfile` and `render.yaml` to the repo and pushed to your Git provider (GitHub/GitLab).
 2. In the Render dashboard, create a new Web Service and connect your repo.
-	- Render will detect `render.yaml` and create the service using the Dockerfile.
-3. In the service settings, add a Persistent Disk (if you want to keep the SQLite DB across deploys): mount the disk to `/usr/src/app/MURIDA-AMPFARISAHO-PORTFOLIOO-main/data`.
-4. Add environment variables under the service settings:
-	- `ADMIN_PASSWORD` (default: `Mizzirash2`)
-	- `OPENAI_API_KEY` (optional)
-	- `HF_API_KEY` and `HF_MODEL` (optional)
+   - Render will detect `render.yaml` and create the service using the Dockerfile.
 
 Notes
 - Render sets `PORT` automatically; the server reads `process.env.PORT`.
-- Using the Dockerfile ensures `better-sqlite3` will be built with required system packages.
+- The site is a static portfolio served by a minimal Node static server; no DB or AI services are required.
 
 Contact
 - If you want, I can create `docker-compose.yml` for local multi-service setups, or prepare a Render secrets/env export for you.

@@ -1,16 +1,11 @@
 FROM node:18-slim
 
-# Install build tools required for native modules (better-sqlite3)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	build-essential python3 make g++ libsqlite3-dev ca-certificates wget && \
-	rm -rf /var/lib/apt/lists/*
-
 # Create app directory
 WORKDIR /usr/src/app
 
-# Copy package manifests and install dependencies
+# Copy package manifests and install dependencies (none required for static site)
 COPY package*.json ./
-RUN npm install --production --no-audit --no-fund
+RUN npm install --production --no-audit --no-fund || true
 
 # Bundle app source
 COPY . .

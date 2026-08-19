@@ -12,8 +12,6 @@ services:
     volumes:
       # bind-mount source for quick local edits
       - ./:/usr/src/app:cached
-      # persistent volume for SQLite data
-      - data:/usr/src/app/MURIDA-AMPFARISAHO-PORTFOLIOO-main/data
     restart: unless-stopped
 
 volumes:
