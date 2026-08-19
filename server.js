@@ -13,7 +13,7 @@ async function ensureFetch() {
         console.warn('Failed to lazy-load node-fetch:', e && e.message);
     }
 }
-import * as DB from './MURIDA-AMPFARISAHO-PORTFOLIOO-main/db.js';
+import * as DB from './MURIDA-AMPFARISAHO-PORTFARISAHO-PORTFOLIOO-main/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

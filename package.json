@@ -18,5 +18,8 @@
   "email": "muridafoster@gmail.com",
   "phone": "060 894 4194",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "better-sqlite3": "^8.0.1",
+    "node-fetch": "^3.3.2"
+  }
 }
