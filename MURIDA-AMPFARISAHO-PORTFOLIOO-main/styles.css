@@ -2446,6 +2446,10 @@ section h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
     display: flex; flex: 1 1 auto; align-items: center; justify-content: center;
     width: 100%; min-height: 0; padding: clamp(24px, 5vh, 60px) 24px;
 }
+.home-page .skills-ribbon, .home-page .footer { flex: 0 0 auto; }
+.home-page .skills-ribbon-track { padding: 0.65rem 0; }
+.home-page .footer { padding: 0.55rem 1rem; }
+.home-page .footer p { margin: 0.15rem 0; font-size: 0.7rem; }
 @media (max-width: 760px) {
     .home-page .hero { padding: 14px 18px; }
     .home-page .hero-content { gap: 0.55rem; }
