@@ -3078,3 +3078,138 @@ section h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
     .home-page .hero-content .cta-button { padding: 7px 15px; }
     .home-page .hero-content .hero-footnote { font-size: 0.6rem; }
 }
+@media (max-width: 760px) {
+    .home-page {
+        height: auto;
+        min-height: 100vh;
+        min-height: 100svh;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .home-page .hero {
+        flex: 1 0 auto;
+        min-height: 0;
+        overflow: visible;
+    }
+    .home-page .hero-content {
+        width: 100%;
+        min-width: 0;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto auto auto auto auto;
+    }
+    .home-page .hero-content > * { min-width: 0; }
+    .home-page .profile-photo-container { max-width: 100%; }
+    .home-page .photo-index { right: 5px; bottom: 10px; }
+}
+
+/* Responsive home layout: keep every section in flow and allow safe scrolling. */
+.home-page {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.home-page .hero { flex: 1 0 auto; }
+.home-page .profile-photo { display: block; object-fit: cover; }
+.home-page .skills-ribbon { min-width: 0; }
+.home-page .footer .container { width: 100%; }
+@media (max-width: 900px) {
+    .home-page .navbar .container { gap: 0.6rem; }
+    .home-page .nav-links { gap: 0.1rem; }
+    .home-page .nav-links a { padding-right: 0.55rem; padding-left: 0.55rem; }
+}
+@media (max-width: 760px) {
+    .home-page .navbar { flex: 0 0 auto; }
+    .home-page .hero {
+        flex: 1 0 auto;
+        align-items: center;
+        padding: clamp(12px, 3vh, 24px) 16px;
+    }
+    .home-page .hero-content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: none;
+        align-items: center;
+        justify-items: center;
+        gap: clamp(0.35rem, 1.4vh, 0.8rem);
+        width: min(100%, 560px);
+        margin: 0 auto;
+        text-align: center;
+    }
+    .home-page .hero-content > * {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: center;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .home-page .hero-eyebrow { align-self: auto; }
+    .home-page .profile-photo-container {
+        width: fit-content;
+        max-width: calc(100% - 24px);
+        margin: 0.25rem 12px 0.4rem 0;
+    }
+    .home-page .profile-photo {
+        width: clamp(112px, 24vw, 170px);
+        height: auto;
+        aspect-ratio: 4 / 5;
+    }
+    .home-page .photo-index { right: -12px; bottom: 10px; }
+    .home-page .hero-content h1 {
+        font-size: clamp(1.7rem, 8vw, 3rem);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+    }
+    .home-page .hero-content .subtitle {
+        max-width: 38rem;
+        font-size: clamp(0.76rem, 3.4vw, 1rem);
+        line-height: 1.45;
+    }
+    .home-page .hero-content .tagline {
+        margin: 0;
+        font-size: clamp(0.82rem, 3.5vw, 1rem);
+        line-height: 1.45;
+    }
+    .home-page .hero-content .cta-button { padding: 10px 20px; }
+    .home-page .hero-content .hero-footnote {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0.2rem 0 0;
+        font-size: 0.68rem;
+        line-height: 1.5;
+    }
+    .home-page .skills-ribbon-track { gap: 1rem; padding: 0.55rem 0; }
+    .home-page .skills-ribbon-track span { font-size: clamp(0.62rem, 2.8vw, 0.72rem); }
+    .home-page .footer { padding: 0.45rem 0.75rem; }
+    .home-page .footer p { font-size: clamp(0.6rem, 2.6vw, 0.7rem); line-height: 1.4; }
+}
+@media (max-width: 760px) and (max-height: 520px) {
+    .home-page .hero { padding: 8px 16px; }
+    .home-page .hero-content {
+        grid-template-columns: minmax(0, 1.2fr) minmax(110px, 0.8fr);
+        grid-template-rows: repeat(6, auto);
+        column-gap: clamp(0.8rem, 4vw, 2rem);
+        row-gap: 0.25rem;
+        text-align: left;
+    }
+    .home-page .hero-content > * { grid-column: 1; justify-self: start; }
+    .home-page .hero-content .hero-eyebrow { grid-row: 1; }
+    .home-page .profile-photo-container {
+        grid-column: 2;
+        grid-row: 1 / 7;
+        justify-self: center;
+        align-self: center;
+        margin: 0;
+    }
+    .home-page .profile-photo { width: clamp(90px, 24vw, 145px); }
+    .home-page .photo-index { right: -12px; }
+    .home-page .hero-content h1 { grid-row: 2; font-size: clamp(1.45rem, 5vw, 2.2rem); }
+    .home-page .hero-content .subtitle { grid-row: 3; font-size: 0.74rem; }
+    .home-page .hero-content .tagline { grid-row: 4; font-size: 0.8rem; }
+    .home-page .hero-content .cta-button { grid-row: 5; }
+    .home-page .hero-content .hero-footnote { grid-row: 6; justify-content: flex-start; font-size: 0.62rem; }
+}
