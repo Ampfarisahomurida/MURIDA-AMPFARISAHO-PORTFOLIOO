@@ -2470,3 +2470,35 @@ section h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
     .home-page .hero-content .tagline { font-size: 0.82rem; }
     .home-page .hero-content .hero-footnote { font-size: 0.65rem; }
 }
+@media (max-width: 760px) {
+    .home-page { height: 100vh; height: 100svh; height: 100dvh; }
+    .home-page .navbar { padding: 0.4rem 0; }
+    .home-page .navbar .container { min-height: 44px; }
+    .home-page .navbar .logo, .home-page .hamburger { width: 40px; height: 40px; }
+    .home-page .hero { padding: 8px 16px; }
+    .home-page .hero-content { grid-template-rows: auto auto auto auto auto auto auto; gap: clamp(0.25rem, 1.1vh, 0.55rem); }
+    .home-page .profile-photo-container { margin: 0; }
+    .home-page .profile-photo { width: clamp(100px, 20svh, 155px); height: clamp(124px, 25svh, 190px); }
+    .home-page .hero-content h1 { font-size: clamp(1.7rem, 7vw, 2.7rem); }
+    .home-page .hero-content .subtitle { font-size: clamp(0.72rem, 3vw, 0.95rem); }
+    .home-page .hero-content .tagline { font-size: clamp(0.78rem, 3.2vw, 0.9rem); }
+    .home-page .hero-content .cta-button { padding: 9px 18px; }
+    .home-page .hero-content .hero-footnote { gap: 0.35rem; font-size: 0.65rem; }
+    .home-page .skills-ribbon-track { gap: 1.2rem; padding: 0.5rem 0; }
+    .home-page .skills-ribbon-track span { font-size: 0.67rem; }
+    .home-page .footer { padding: 0.35rem 0.75rem; }
+    .home-page .footer p { font-size: 0.62rem; }
+}
+@media (max-height: 620px) and (max-width: 760px) {
+    .home-page .navbar { padding: 0.25rem 0; }
+    .home-page .navbar .container { min-height: 38px; }
+    .home-page .navbar .logo, .home-page .hamburger { width: 36px; height: 36px; }
+    .home-page .hero { padding: 4px 12px; }
+    .home-page .hero-content { gap: 0.2rem; }
+    .home-page .profile-photo { width: 88px; height: 108px; }
+    .home-page .hero-content h1 { font-size: clamp(1.55rem, 6vw, 2.2rem); }
+    .home-page .hero-content .subtitle { font-size: 0.7rem; }
+    .home-page .hero-content .tagline { font-size: 0.75rem; }
+    .home-page .hero-content .cta-button { padding: 7px 15px; }
+    .home-page .hero-content .hero-footnote { font-size: 0.6rem; }
+}
